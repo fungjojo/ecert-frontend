@@ -1,0 +1,3 @@
+const GET = () => {};
+
+export { GET };
