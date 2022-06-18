@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getNavRouteByAccountType } from "../helper/navHelper";
 import { useLoginHook } from "../hook/loginHook";
 import { login } from "../redux/actions/loginAction";
 import { LoginStateProps } from "../redux/reducers/loginReducer";
@@ -20,35 +21,43 @@ const Login = (props: LoginProps) => {
 
   const navigate = useNavigate();
   const isLoggedIn = useLoginHook(loginState.username);
-  console.log("??? loginState", loginState);
-  console.log("??? isLoggedIn", isLoggedIn);
 
-  // useEffect(() => {
   if (isLoggedIn) {
-    navigate("/", { replace: true });
+    navigate(getNavRouteByAccountType(loginState.accountType), {
+      replace: true,
+    });
   }
-  // }, [isLoggedIn]);
 
   return (
-    <div>
-      <p>Login Page</p>
-      <input
-        title="username"
-        placeholder="username"
-        onChange={(e: any) => {
-          console.log("??? username", e.target.value);
-          setUsername(e.target.value);
-        }}
-      />
-      <input
-        title="password"
-        placeholder="password"
-        onChange={(e: any) => {
-          console.log("??? pw", e.target.value);
-          setPassword(e.target.value);
-        }}
-      />
+    <div className="bg-bgPurple p-10 flex flex-col">
+      <p className="flex justify-center my-8 text-lg">Login Page</p>
+      <div className="">
+        <p className="flex my-2 text-xs text-textGrey">Username</p>
+        <input
+          title="username"
+          placeholder="username"
+          className="flex flex-1 rounded-md p-1 my-2"
+          onChange={(e: any) => {
+            setUsername(e.target.value);
+          }}
+        />
+      </div>
+
+      <div className="">
+        <p className="flex my-2 text-xs text-textGrey">Password</p>
+        <input
+          title="password"
+          placeholder="password"
+          className="flex flex-1 rounded-md p-1 my-2"
+          onChange={(e: any) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </div>
+
       <button
+        className="flex flex-1 rounded-md p-1 my-2 text-xs h-10 bg-black"
+        title="Login"
         onClick={() => {
           login(username);
         }}

@@ -1,16 +1,18 @@
+import { AccountType } from "../../dataModel/constants";
 import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL } from "../actions/types";
 
 export type LoginStateProps = {
   loading: boolean;
   username: string;
   loginSuccess: boolean;
-  // userRole: string,
+  accountType: string;
 };
 
 const initialState: LoginStateProps = {
   loading: false,
   username: "",
   loginSuccess: false,
+  accountType: AccountType.student,
 };
 
 const loginReducer = (state = initialState, action: any) => {
@@ -21,11 +23,16 @@ const loginReducer = (state = initialState, action: any) => {
         loading: true,
       };
     case LOGIN_SUCCESS:
-      console.log("??? action: LOGIN_SUCCESS", action);
+      const name = action.username;
       return {
         ...state,
         loading: false,
-        username: action.username,
+        username: name,
+        accountType: name.includes("company")
+          ? AccountType.company
+          : name.includes("uni")
+          ? AccountType.uni
+          : AccountType.student,
       };
     case LOGIN_FAIL:
       return {
