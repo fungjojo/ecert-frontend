@@ -29,39 +29,43 @@ const Login = (props: LoginProps) => {
   }
 
   return (
-    <div className="bg-bgPurple p-10 flex flex-col">
-      <p className="flex justify-center my-8 text-lg">Login Page</p>
-      <div className="">
+    <div className="bg-bgPurple p-10 flex flex-col flex-1 items-center">
+      <div className="w-1/3 ">
+        <p className="flex justify-center my-8 text-2xl">Login</p>
         <p className="flex my-2 text-xs text-textGrey">Username</p>
         <input
           title="username"
           placeholder="username"
-          className="flex flex-1 rounded-md p-1 my-2"
+          className="flex flex-1 rounded-md p-3 my-2 w-full"
           onChange={(e: any) => {
             setUsername(e.target.value);
           }}
         />
-      </div>
 
-      <div className="">
         <p className="flex my-2 text-xs text-textGrey">Password</p>
         <input
           title="password"
           placeholder="password"
-          className="flex flex-1 rounded-md p-1 my-2"
+          className="flex flex-1 rounded-md p-3 my-2 w-full"
           onChange={(e: any) => {
             setPassword(e.target.value);
           }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              login(username);
+            }
+          }}
+        />
+
+        <input
+          type="button"
+          value={"login"}
+          className="flex rounded-md p-3 my-4 text-xs bg-slate-400 w-full text-white text-xl justify-center"
+          onClick={() => {
+            login(username);
+          }}
         />
       </div>
-
-      <button
-        className="flex flex-1 rounded-md p-1 my-2 text-xs h-10 bg-black"
-        title="Login"
-        onClick={() => {
-          login(username);
-        }}
-      />
     </div>
   );
 };

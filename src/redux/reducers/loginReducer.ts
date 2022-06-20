@@ -1,5 +1,5 @@
 import { AccountType } from "../../dataModel/constants";
-import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL } from "../actions/types";
+import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../actions/types";
 
 export type LoginStateProps = {
   loading: boolean;
@@ -40,6 +40,9 @@ const loginReducer = (state = initialState, action: any) => {
         loading: false,
         error: action.error,
       };
+
+    case LOGOUT:
+      return { ...initialState };
     default:
       return state;
   }

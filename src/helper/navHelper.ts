@@ -9,12 +9,19 @@ export interface routeProps {
   element: any;
 }
 
+const PATH = {
+  root: "/",
+  login: "/login",
+  home: "/home",
+  verify: "/verify",
+};
+
 const getNavRoutes = () => {
   const routeList = [
-    { path: "/", element: App },
-    { path: "/login", element: LoginPage },
-    { path: "/home", element: HomePage },
-    { path: "/verify", element: VerifyPage },
+    { path: PATH.root, element: App },
+    { path: PATH.login, element: LoginPage },
+    { path: PATH.home, element: HomePage },
+    { path: PATH.verify, element: VerifyPage },
   ];
   return routeList;
 };
@@ -22,12 +29,26 @@ const getNavRoutes = () => {
 const getNavRouteByAccountType = (accountType: string) => {
   switch (accountType) {
     case AccountType.company:
-      return "/verify";
+      return PATH.verify;
     case AccountType.uni:
-      return "/home";
+      return PATH.home;
     default:
-      return "/home";
+      // return PATH.home;
+      return PATH.verify;
   }
 };
 
-export { getNavRoutes, getNavRouteByAccountType };
+const getNavRouteByLoginState = (isLoggedIn: boolean, accountType: string) => {
+  if (!isLoggedIn) {
+    return PATH.login;
+  }
+
+  return getNavRouteByAccountType(accountType);
+};
+
+export {
+  PATH,
+  getNavRoutes,
+  getNavRouteByAccountType,
+  getNavRouteByLoginState,
+};
