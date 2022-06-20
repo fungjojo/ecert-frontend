@@ -23,7 +23,7 @@ const Home = (props: HomeProps) => {
 
   //   TODO: upload cert here
   return (
-    <div className="bg-bgPurple p-10 flex flex-col">
+    <div className="bg-bgPurple p-10 flex flex-col h-full">
       <Header
         headerTitle="Home"
         logout={() => {

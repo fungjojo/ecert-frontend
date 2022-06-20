@@ -53,7 +53,7 @@ const Verify = (props: VerifyProps) => {
 
   //   TODO: upload cert here
   return (
-    <div className="bg-bgPurple p-10 flex flex-col">
+    <div className="bg-bgPurple p-10 flex flex-col h-full">
       <Header
         headerTitle="Verify Certificate"
         logout={() => {

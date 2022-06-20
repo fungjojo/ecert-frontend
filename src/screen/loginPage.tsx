@@ -29,7 +29,7 @@ const Login = (props: LoginProps) => {
   }
 
   return (
-    <div className="bg-bgPurple p-10 flex flex-col flex-1 items-center">
+    <div className="bg-bgPurple p-10 flex flex-col flex-1 h-full items-center">
       <div className="w-1/3 ">
         <p className="flex justify-center my-8 text-2xl">Login</p>
         <p className="flex my-2 text-xs text-textGrey">Username</p>
