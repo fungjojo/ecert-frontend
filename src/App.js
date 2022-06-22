@@ -1,35 +1,27 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getNavRouteByAccountType, PATH } from "./helper/navHelper";
+import { useSelector } from "react-redux";
+import { useLoginHook } from "./hook/loginHook";
+import { useEffect } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <nav
-        style={{
-          borderBottom: "solid 1px",
-          paddingBottom: "1rem",
-        }}
-      >
-        <Link to="/login">Login</Link> |{" "}
-        {/* <Link to="/expenses">Expenses</Link> */}
-      </nav>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-    </div>
-  );
-}
+const App = () => {
+  const loginState = useSelector((state) => state.login);
+  const navigate = useNavigate();
+
+  const isLoggedIn = useLoginHook(loginState.username);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(getNavRouteByAccountType(loginState.accountType), {
+        replace: true,
+      });
+    } else {
+      navigate(PATH.login, {
+        replace: true,
+      });
+    }
+  }, []);
+  return <div className="App"></div>;
+};
 
 export default App;
