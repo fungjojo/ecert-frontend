@@ -1,5 +1,6 @@
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CertificateTemplate from "../components/CertificateTemplate";
 import Header from "../components/Header";
 import { useLoginHook } from "../hook/loginHook";
 import { logout } from "../redux/actions/loginAction";
@@ -21,6 +22,8 @@ const Home = (props: HomeProps) => {
     });
   }
 
+  const downloadCert = () => {};
+
   //   TODO: upload cert here
   return (
     <div className="bg-bgPurple p-10 flex flex-col h-full">
@@ -28,6 +31,16 @@ const Home = (props: HomeProps) => {
         headerTitle="Home"
         logout={() => {
           logout();
+        }}
+      />
+
+      <CertificateTemplate />
+      <input
+        type="button"
+        value="Download Cert (csv)"
+        className="flex flex-1 bg-slate-400 rounded-md p-3 my-2 w-1/4 text-white text-xl justify-center"
+        onClick={() => {
+          downloadCert();
         }}
       />
     </div>

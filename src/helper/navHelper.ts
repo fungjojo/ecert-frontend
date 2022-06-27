@@ -33,8 +33,8 @@ const getNavRouteByAccountType = (accountType: string) => {
     case AccountType.uni:
       return PATH.home;
     default:
-      // return PATH.home;
-      return PATH.verify;
+      return PATH.home;
+    // return PATH.verify;
   }
 };
 
