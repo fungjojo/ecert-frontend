@@ -1,17 +1,23 @@
 interface HeaderProps {
   logout: Function;
   headerTitle?: string;
+  iconSrc?: any;
 }
 
 const Header = (props: HeaderProps) => {
-  const { logout, headerTitle = "" } = props || {};
+  const { logout, headerTitle = "", iconSrc } = props || {};
   return (
-    <div className="flex flex-row">
-      <p className="flex my-8 text-2xl flex-1">{headerTitle}</p>
+    <div className="flex flex-row px-10">
+      <div className="flex self-center mr-4">
+        {!!iconSrc && <img src={iconSrc} className="w-6 h-6" />}
+      </div>
+      <p className="flex my-8 text-2xl flex-1 text-textDarkGrey">
+        {headerTitle}
+      </p>
       <input
         type="button"
-        value={"logout"}
-        className="flex rounded-md p-3 my-4 text-xs bg-violet-700 w-15 text-white text-xl justify-center"
+        value={"Logout"}
+        className="flex rounded-md p-5 my-4 text-s bg-btnPurple w-15 text-white justify-center"
         onClick={() => {
           logout();
         }}

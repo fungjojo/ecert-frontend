@@ -1,4 +1,4 @@
-export const loginSessionLimit = 60; // seconds
+export const loginSessionLimit = 600; // seconds
 
 export const AccountType = {
   student: "student",

@@ -7,6 +7,8 @@ import { logout } from "../redux/actions/loginAction";
 import { LoginStateProps } from "../redux/reducers/loginReducer";
 import dummyCert from "../dummy/test-blockertv2.json";
 import Header from "../components/Header";
+import TableView from "../components/TableView";
+import { imageMap } from "../helper/imageHelper";
 
 interface VerifyProps {
   logout: Function;
@@ -18,7 +20,8 @@ const Verify = (props: VerifyProps) => {
   const navigate = useNavigate();
   const isLoggedIn = useLoginHook(loginState.username);
 
-  const [cert, setCert] = useState<any>(dummyCert);
+  const [file, setFile] = useState<any>();
+  const [fileName, setFileName] = useState<any>("-");
   const [certResp, setCertResp] = useState<any>();
 
   if (!isLoggedIn) {
@@ -51,40 +54,78 @@ const Verify = (props: VerifyProps) => {
     }
   };
 
-  //   TODO: upload cert here
+  const onFileChange = async (event: any) => {
+    const file = event.target.files[0];
+    const fileJson = await new Response(file).json();
+    setFileName(file?.name);
+    setFile(fileJson);
+  };
+
   return (
-    <div className="bg-bgPurple p-10 flex flex-col h-full">
+    <div className="flex flex-col h-full">
       <Header
         headerTitle="Verify Certificate"
         logout={() => {
           logout();
         }}
+        iconSrc={imageMap.verifyFile}
       />
+      <div className="bg-bgGrey p-10 flex flex-col h-full">
+        <div className="flex flex-row content-center">
+          <p>{`File Chosen: ${fileName}`}</p>
+          <input
+            type="button"
+            value={"Use dummy"}
+            className="flex rounded-md p-2 ml-2 text-xs bg-slate-400 w-15 text-white justify-center"
+            onClick={() => {
+              setFile(dummyCert);
+              setFileName("DummyCert.json");
+            }}
+          />
+        </div>
+        <div>
+          <p>{"Cert Data:"}</p>
+          <TableView
+            colNameList={["Id", "Issued On", "Identity"]}
+            colItemList={
+              (file && [
+                [
+                  file.id || "",
+                  file.issuanceDate || "",
+                  file.recipient?.identity || "",
+                ],
+              ]) ||
+              []
+            }
+          />
+          <p className="text-red-700">{"Result"}</p>
+          <p>{`Response Status: ${certResp?.status || ""}`}</p>
+          <p>{`Response Message: ${certResp?.message || "-"}`}</p>
+        </div>
 
-      <input
-        type="button"
-        value={"Upload New Cert For Verification"}
-        className="flex rounded-md p-3 my-4 text-xs bg-amber-400 w-1/3 text-white text-xl justify-center"
-        onClick={() => {
-          verifyCert(cert);
-        }}
-      />
-      <input
-        type="button"
-        value={"Verify"}
-        className="flex rounded-md p-3 my-4 text-xs bg-slate-400 w-1/3 text-white text-xl justify-center"
-        onClick={() => {
-          verifyCert(cert);
-        }}
-      />
-
-      <p>{"Cert Data:"}</p>
-      <p>{cert.id}</p>
-      <p>{cert.issuedOn}</p>
-      <p>{cert.recipient.identity}</p>
-      <p className="text-red-700">{"Result"}</p>
-      <p>{`Response Status: ${certResp?.status || ""}`}</p>
-      <p>{`Response Message: ${certResp?.message || ""}`}</p>
+        <div className="flex flex-row">
+          <label
+            htmlFor="file-upload"
+            className="flex flex-1 rounded-md p-3 my-4 mr-4 text-s bg-slate-400 w-1/3 text-white justify-center"
+          >
+            Upload New Cert For Verification
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            className="hidden"
+            onChange={onFileChange}
+          />
+          <input
+            type="button"
+            value={"Verify Certificate"}
+            className="flex flex-1 rounded-md p-3 my-4 text-s bg-amber-400 w-1/3 text-white justify-center"
+            onClick={() => {
+              verifyCert(file);
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -3,8 +3,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bgPurple: "#e5daf0",
+        bgPurple: "#d8d3e0",
+        btnPurple: "#c0afdb",
+        bgGrey: "#dfe3eb",
         textGrey: "#525252",
+        textDarkGrey: "#363434",
       },
     },
   },

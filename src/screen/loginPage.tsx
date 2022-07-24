@@ -6,6 +6,7 @@ import { getNavRouteByAccountType } from "../helper/navHelper";
 import { useLoginHook } from "../hook/loginHook";
 import { login } from "../redux/actions/loginAction";
 import { LoginStateProps } from "../redux/reducers/loginReducer";
+import { imageMap } from "../helper/imageHelper";
 
 interface LoginProps {
   login: Function;
@@ -29,13 +30,18 @@ const Login = (props: LoginProps) => {
   }
 
   return (
-    <div className="bg-bgPurple p-10 flex flex-col flex-1 h-full items-center">
-      <div className="w-1/3 ">
-        <p className="flex justify-center my-8 text-2xl">Login</p>
+    <div className="p-10 flex flex-col flex-1 h-full items-center">
+      <div className="w-96 bg-bgPurple p-10 rounded-md">
+        <div className="flex flex-row justify-center">
+          <img src={imageMap.certLogo} className="w-12 h-12" />
+        </div>
+        <p className="flex justify-center mt-4 mb-8 text-2xl text-textDarkGrey">
+          E-Certificate Portal
+        </p>
         <p className="flex my-2 text-xs text-textGrey">Username</p>
         <input
           title="username"
-          placeholder="username"
+          placeholder="Username"
           className="flex flex-1 rounded-md p-3 my-2 w-full"
           onChange={(e: any) => {
             setUsername(e.target.value);
@@ -45,7 +51,7 @@ const Login = (props: LoginProps) => {
         <p className="flex my-2 text-xs text-textGrey">Password</p>
         <input
           title="password"
-          placeholder="password"
+          placeholder="Password"
           className="flex flex-1 rounded-md p-3 my-2 w-full"
           onChange={(e: any) => {
             setPassword(e.target.value);
@@ -59,8 +65,8 @@ const Login = (props: LoginProps) => {
 
         <input
           type="button"
-          value={"login"}
-          className="flex rounded-md p-3 my-4 text-xs bg-slate-400 w-full text-white text-xl justify-center"
+          value={"Login"}
+          className="flex rounded-md p-3 my-4 bg-slate-400 w-full text-white text-xl justify-center"
           onClick={() => {
             login(username);
           }}
