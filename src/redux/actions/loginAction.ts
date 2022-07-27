@@ -10,29 +10,7 @@ const loginSuccessAction = makeActionCreator(LOGIN_SUCCESS, "username");
 const loginFailAction = makeActionCreator(LOGIN_FAIL);
 const logoutAction = makeActionCreator(LOGOUT);
 
-// api calls
-
-// export const addTodo = ({ title, userId }) => {
-//   return (dispatch) => {
-//     dispatch(addTodoStarted());
-
-//     axios
-//       .post(`https://jsonplaceholder.typicode.com/todos`, {
-//         title,
-//         userId,
-//         completed: false,
-//       })
-//       .then((res) => {
-//         dispatch(addTodoSuccess(res.data));
-//       })
-//       .catch((err) => {
-//         dispatch(addTodoFailure(err.message));
-//       });
-//   };
-// };
-
 const login = (username: string) => {
-  console.log("???? login action username", username);
   return (dispatch: any, getState: () => RootStateProps) => {
     dispatch(loginAction());
     const currentDate = moment().toDate();
@@ -44,11 +22,6 @@ const login = (username: string) => {
     window.sessionStorage.setItem(username, JSON.stringify(userObject));
     dispatch(loginSuccessAction(username));
     return;
-    // Return promise with success and failure actions
-    // return axios.get("/api/auth/user").then(
-    //   (user) => dispatch({ type: GET_CURRENT_USER_SUCCESS, user }),
-    //   (err) => dispatch({ type: GET_CURRENT_USER_FAILURE, err })
-    // );
   };
 };
 

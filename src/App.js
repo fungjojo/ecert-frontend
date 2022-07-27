@@ -1,18 +1,17 @@
 import "./App.css";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import { getNavRouteByAccountType, PATH } from "./helper/navHelper";
-import { useSelector } from "react-redux";
 import { useLoginHook } from "./hook/loginHook";
 import { useEffect } from "react";
 
-const App = () => {
-  const loginState = useSelector((state) => state.login);
+const App = ({ username, accountType }) => {
   const navigate = useNavigate();
 
-  const isLoggedIn = useLoginHook(loginState.username);
+  const isLoggedIn = useLoginHook(username);
   useEffect(() => {
     if (isLoggedIn) {
-      navigate(getNavRouteByAccountType(loginState.accountType), {
+      navigate(getNavRouteByAccountType(accountType), {
         replace: true,
       });
     } else {
@@ -24,4 +23,13 @@ const App = () => {
   return <div className="App"></div>;
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    username: state.login.username,
+    accountType: state.login.accountType,
+  };
+};
+
+const AppPage = connect(mapStateToProps, null)(App);
+
+export default AppPage;

@@ -23,3 +23,12 @@ export interface fileModel {
   // type: "application/json"
   // webkitRelativePath: ""
 }
+
+export interface certObject {
+  id: number;
+  certDataString: string;
+  lastUpdatedAt: string;
+  nonce: number;
+  userId: string;
+  txnId: string;
+}

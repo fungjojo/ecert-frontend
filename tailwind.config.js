@@ -8,6 +8,8 @@ module.exports = {
         bgGrey: "#dfe3eb",
         textGrey: "#525252",
         textDarkGrey: "#363434",
+        btnGreen: "#7cdea8",
+        disableGrey: "#cdd1cf",
       },
     },
   },

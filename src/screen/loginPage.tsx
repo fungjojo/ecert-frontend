@@ -7,30 +7,33 @@ import { useLoginHook } from "../hook/loginHook";
 import { login } from "../redux/actions/loginAction";
 import { LoginStateProps } from "../redux/reducers/loginReducer";
 import { imageMap } from "../helper/imageHelper";
+import Loading from "../components/Loading";
 
 interface LoginProps {
   login: Function;
+  username: string;
+  accountType: string;
+  loading: boolean;
 }
 
 const Login = (props: LoginProps) => {
-  const { login } = props;
+  const { login, username, accountType, loading } = props;
 
-  const [username, setUsername] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginState = useSelector<any, LoginStateProps>((state) => state.login);
-
   const navigate = useNavigate();
-  const isLoggedIn = useLoginHook(loginState.username);
+  const isLoggedIn = useLoginHook(username);
 
   if (isLoggedIn) {
-    navigate(getNavRouteByAccountType(loginState.accountType), {
+    navigate(getNavRouteByAccountType(accountType), {
       replace: true,
     });
   }
 
   return (
     <div className="p-10 flex flex-col flex-1 h-full items-center">
+      <Loading isLoading={loading} />
       <div className="w-96 bg-bgPurple p-10 rounded-md">
         <div className="flex flex-row justify-center">
           <img src={imageMap.certLogo} className="w-12 h-12" />
@@ -44,7 +47,7 @@ const Login = (props: LoginProps) => {
           placeholder="Username"
           className="flex flex-1 rounded-md p-3 my-2 w-full"
           onChange={(e: any) => {
-            setUsername(e.target.value);
+            setUsernameInput(e.target.value);
           }}
         />
 
@@ -58,7 +61,7 @@ const Login = (props: LoginProps) => {
           }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              login(username);
+              login(usernameInput);
             }
           }}
         />
@@ -68,7 +71,7 @@ const Login = (props: LoginProps) => {
           value={"Login"}
           className="flex rounded-md p-3 my-4 bg-slate-400 w-full text-white text-xl justify-center"
           onClick={() => {
-            login(username);
+            login(usernameInput);
           }}
         />
       </div>
@@ -84,6 +87,14 @@ const mapDispatchToProps = (dispatch: Function) => {
   };
 };
 
-const LoginPage = connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state: any) => {
+  return {
+    username: state.login.username,
+    accountType: state.login.accountType,
+    loading: state.login.loading,
+  };
+};
+
+const LoginPage = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default LoginPage;
