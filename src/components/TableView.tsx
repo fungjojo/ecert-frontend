@@ -1,26 +1,46 @@
 interface TableViewProps {
-  colNameList: string[];
-  colItemList: string[][];
+  colNameList: any[];
+  colItemList: any[];
+  tableClassName?: string;
 }
 
 const TableView = (props: TableViewProps) => {
-  const { colNameList, colItemList } = props || {};
+  const { colNameList, colItemList, tableClassName } = props || {};
   return (
-    <table className="">
-      <tr className="border-textGrey w-9">
-        {colNameList.map((colName: string) => (
-          <th className="border-2 border-btnPurple px-8 w-9">{colName}</th>
+    <table className={tableClassName}>
+      <tr className="border-textGrey w-auto">
+        {colNameList.map(({ item, className }: any) => (
+          <th
+            className={`border-2 border-btnPurple px-2 text-wrap w-auto ${className} overflow-scroll align-center`}
+          >
+            {item}
+          </th>
         ))}
       </tr>
       {colItemList.map((rowItemList: string[]) => {
         if (rowItemList.length === 0) return;
         return (
-          <tr className="w-9">
-            {rowItemList.map((rowItem: string) => (
-              <td className="w-9 border-2 border-btnPurple px-8">
-                {rowItem || "-"}
-              </td>
-            ))}
+          <tr className="w-auto">
+            {rowItemList.map(({ type, item, className, contentView }: any) => {
+              if (type === "button") {
+                if (!item)
+                  return <td className="border-2 border-btnPurple px-2" />;
+                return (
+                  <td
+                    className={`border-2 border-btnPurple px-2 text-wrap ${className} w-auto overflow-scroll justify-center`}
+                  >
+                    {contentView}
+                  </td>
+                );
+              }
+              return (
+                <td
+                  className={`border-2 border-btnPurple px-2 text-wrap ${className} w-auto overflow-scroll justify-center`}
+                >
+                  {item || "-"}
+                </td>
+              );
+            })}
           </tr>
         );
       })}

@@ -5,6 +5,7 @@ import {
   ISSUE_CERT,
   ISSUE_CERT_SUCCESS,
   ISSUE_CERT_FAIL,
+  CLEAR_CERT,
 } from "../actions/types";
 
 export type CertStateProps = {
@@ -57,6 +58,12 @@ const certReducer = (state = initialState, action: any) => {
         loading: false,
         signedCert: response,
         certError: response?.data?.error || "Issue certificate Failed",
+      };
+    case CLEAR_CERT:
+      return {
+        ...state,
+        signedCert: null,
+        certError: "",
       };
     default:
       return state;

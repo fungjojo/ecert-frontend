@@ -86,13 +86,17 @@ const Verify = (props: VerifyProps) => {
         <div>
           <p>{"Cert Data:"}</p>
           <TableView
-            colNameList={["Id", "Issued On", "Identity"]}
+            colNameList={[
+              { item: "Id" },
+              { item: "Issued On" },
+              { item: "Identity" },
+            ]}
             colItemList={
               (file && [
                 [
-                  file.id || "",
-                  file.issuanceDate || "",
-                  file.recipient?.identity || "",
+                  { item: file.id || "" },
+                  { item: file.issuanceDate || "" },
+                  { item: file.recipient?.identity || "" },
                 ],
               ]) ||
               []

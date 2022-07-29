@@ -6,18 +6,26 @@ interface CertificateTemplateProps {
 }
 
 const dummyCert = {
-  studentName: "Chan Tai Man",
-  degreeNameEN: "Bachelor of Engineering",
-  degreeNameZH: "工程學士",
-  chancellor: "Chan Tai Man",
-  registrar: "Chan Tai Man",
-  viceChancellor: "Chan Tai Man",
+  name: "[Student_Name]",
+  degreeNameEN: "[Degree_Name]",
+  degreeNameZH: "[Degree_Name_ZH]",
+  chancellor: "[Chancellor_Name]",
+  registrar: "[Registrar_Name]",
+  viceChancellor: "[Vice_Chancellor_Name]",
 };
+// const dummyCert = {
+//   studentName: "Chan Tai Man",
+//   degreeNameEN: "Bachelor of Engineering",
+//   degreeNameZH: "工程學士",
+//   chancellor: "Chan Tai Man",
+//   registrar: "Chan Tai Man",
+//   viceChancellor: "Chan Tai Man",
+// };
 
 const CertificateTemplate = (props: CertificateTemplateProps) => {
-  const width = window.innerWidth * 0.7;
+  const width = 700;
   const { certData = dummyCert } = props || {};
-  const { studentName, degreeNameEN, degreeNameZH } = certData || {};
+  const { name, degreeNameEN, degreeNameZH } = certData || {};
   return (
     <div
       className="flex flex-col p-5"
@@ -33,7 +41,7 @@ const CertificateTemplate = (props: CertificateTemplateProps) => {
         <p className="text-center">香港大學</p>
       </div>
       <div className="flex flex-1 flex-col">
-        <p className="text-center mb-5">{studentName}</p>
+        <p className="text-center mb-5">{name}</p>
         <p className="text-center">
           has fulfilled all the requirements of the University and having
           satisfied the examiners

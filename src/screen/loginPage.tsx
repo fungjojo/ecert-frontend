@@ -38,10 +38,10 @@ const Login = (props: LoginProps) => {
         <div className="flex flex-row justify-center">
           <img src={imageMap.certLogo} className="w-12 h-12" />
         </div>
-        <p className="flex justify-center mt-4 mb-8 text-2xl text-textDarkGrey">
+        <p className="flex justify-center mt-4 mb-8 text-2xl tx-textDarkGrey">
           E-Certificate Portal
         </p>
-        <p className="flex my-2 text-xs text-textGrey">Username</p>
+        <p className="flex my-2 text-xs tx-textGrey">Username</p>
         <input
           title="username"
           placeholder="Username"
@@ -51,7 +51,7 @@ const Login = (props: LoginProps) => {
           }}
         />
 
-        <p className="flex my-2 text-xs text-textGrey">Password</p>
+        <p className="flex my-2 text-xs tx-textGrey">Password</p>
         <input
           title="password"
           placeholder="Password"

@@ -11,7 +11,14 @@ module.exports = {
         btnGreen: "#7cdea8",
         disableGrey: "#cdd1cf",
       },
+      width: {
+        50: "50px",
+        700: "700px",
+        1500: "1500px",
+        2000: "2000px",
+      },
     },
   },
   plugins: [],
+  important: true,
 };

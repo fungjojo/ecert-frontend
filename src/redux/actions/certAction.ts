@@ -5,6 +5,7 @@ import {
   ISSUE_CERT,
   ISSUE_CERT_SUCCESS,
   ISSUE_CERT_FAIL,
+  CLEAR_CERT,
 } from "./types";
 import { makeActionCreator } from "../reduxHelper";
 import { RootStateProps } from "../reducers";
@@ -15,6 +16,7 @@ const getCertAction = makeActionCreator(GET_CERT);
 const getCertSuccessAction = makeActionCreator(GET_CERT_SUCCESS, "data");
 const getCertFailAction = makeActionCreator(GET_CERT_FAIL);
 const issueCertAction = makeActionCreator(ISSUE_CERT);
+const clearCertAction = makeActionCreator(CLEAR_CERT);
 const issueCertSuccessAction = makeActionCreator(ISSUE_CERT_SUCCESS, "data");
 const issueCertFailAction = makeActionCreator(ISSUE_CERT_FAIL, "error");
 
@@ -38,20 +40,19 @@ const getCertificate = () => {
   };
 };
 
-const issueCertificate = (certDataString: string) => {
-  return (dispatch: any, getState: () => RootStateProps) => {
-    const { username } = getState()?.login;
+const issueCertificate = (studentId: string, certDataString: string) => {
+  return (dispatch: any) => {
     dispatch(issueCertAction());
     const url = `http://107.20.26.70/api/certs/`;
     const bodyFormData = new FormData();
     bodyFormData.append("certDataString", certDataString);
     bodyFormData.append("lastUpdatedAt", moment().toISOString());
-    bodyFormData.append("userId", username);
+    bodyFormData.append("userId", studentId);
 
     console.log("??? lastUpdatedAt", moment().toISOString());
-    console.log("??? username", username);
+    console.log("??? studentId", studentId);
     console.log("??? post certDataString=", certDataString);
-    if (!username || !certDataString) {
+    if (!studentId || !certDataString) {
       return dispatch(issueCertFailAction("missing param"));
     }
     axios.post(url, bodyFormData, { timeout: 60000 }).then(
@@ -67,4 +68,4 @@ const issueCertificate = (certDataString: string) => {
   };
 };
 
-export { getCertificate, issueCertificate, getCertAction };
+export { getCertificate, issueCertificate, getCertAction, clearCertAction };

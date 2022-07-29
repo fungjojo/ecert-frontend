@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Certificate } from "@blockcerts/cert-verifier-js";
 import { useLoginHook } from "../hook/loginHook";
 import { logout } from "../redux/actions/loginAction";
-import { issueCertificate } from "../redux/actions/certAction";
-import { LoginStateProps } from "../redux/reducers/loginReducer";
+import { issueCertificate, clearCertAction } from "../redux/actions/certAction";
 import dummyCert from "../dummy/test-blockertv2.json";
 import Header from "../components/Header";
-import TableView from "../components/TableView";
 import { imageMap } from "../helper/imageHelper";
 import Loading from "../components/Loading";
 
@@ -19,16 +16,25 @@ interface VerifyProps {
   signedCert: any;
   certError: string;
   loading: boolean;
+  clearCertAction: Function;
 }
 
 const Verify = (props: VerifyProps) => {
-  const { loading, logout, issueCertificate, username, signedCert, certError } =
-    props || {};
+  const {
+    loading,
+    logout,
+    issueCertificate,
+    username,
+    signedCert,
+    certError,
+    clearCertAction,
+  } = props || {};
   const navigate = useNavigate();
   const isLoggedIn = useLoginHook(username);
 
   const [file, setFile] = useState<any>();
   const [fileName, setFileName] = useState<any>("-");
+  const [studentId, setStudentId] = useState<string>("");
 
   if (!isLoggedIn) {
     navigate("/login", {
@@ -54,7 +60,6 @@ const Verify = (props: VerifyProps) => {
     element.click();
   };
 
-  console.log("??? certError", certError, signedCert);
   return (
     <div className="flex flex-col h-full">
       <Loading isLoading={loading} />
@@ -84,17 +89,33 @@ const Verify = (props: VerifyProps) => {
             value={"Issue Certificate"}
             className="flex flex-1 rounded-md p-3 my-4 mr-4 text-s bg-amber-400 w-1/3 text-white justify-center"
             onClick={() => {
-              if (file) {
-                issueCertificate(JSON.stringify(file));
-              } else {
+              if (!file) {
                 alert("Please upload your certificate first!");
+                return;
               }
+              if (!studentId) {
+                alert("Please input student ID first!");
+                return;
+              }
+
+              issueCertificate(studentId, JSON.stringify(file));
             }}
           />
           <input id="myInput" className="hidden" />
         </div>
+        <div className="flex flex-row content-center item-center mb-5">
+          <p className="text-xs tx-textGrey mr-8">Issue Cert For</p>
+          <input
+            title="stuent_id"
+            placeholder="Student Id"
+            className="flex rounded-md p-2 my-2 w-1/4"
+            onChange={(e: any) => {
+              setStudentId(e.target.value);
+            }}
+          />
+        </div>
         <div className="flex flex-row content-center">
-          <p className="tx-bgGrey text-xl">{`File Name: ${fileName}`}</p>
+          <p className="tx-bgGrey text-xl self-center">{`File Name: ${fileName}`}</p>
           <input
             type="button"
             value={"Use dummy"}
@@ -111,6 +132,7 @@ const Verify = (props: VerifyProps) => {
             onClick={() => {
               setFile(null);
               setFileName("-");
+              clearCertAction();
             }}
           />
         </div>
@@ -152,8 +174,11 @@ const mapDispatchToProps = (dispatch: Function) => {
     logout: () => {
       dispatch(logout());
     },
-    issueCertificate: (certDataString: string) => {
-      dispatch(issueCertificate(certDataString));
+    clearCertAction: () => {
+      dispatch(clearCertAction());
+    },
+    issueCertificate: (studentId: string, certDataString: string) => {
+      dispatch(issueCertificate(studentId, certDataString));
     },
   };
 };

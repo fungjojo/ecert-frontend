@@ -1,7 +1,7 @@
 export interface user {}
 
 export interface templateModel {
-  studentName: string;
+  name: string;
   degreeNameEN: string;
   degreeNameZH: string;
   chancellor: string;
