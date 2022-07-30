@@ -1,11 +1,9 @@
-import { useEffect } from "react";
 import { useState } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getNavRouteByAccountType } from "../helper/navHelper";
 import { useLoginHook } from "../hook/loginHook";
 import { login } from "../redux/actions/loginAction";
-import { LoginStateProps } from "../redux/reducers/loginReducer";
 import { imageMap } from "../helper/imageHelper";
 import Loading from "../components/Loading";
 

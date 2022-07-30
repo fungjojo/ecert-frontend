@@ -28,6 +28,7 @@ const CertificateTemplate = (props: CertificateTemplateProps) => {
   const { name, degreeNameEN, degreeNameZH } = certData || {};
   return (
     <div
+      id="capture"
       className="flex flex-col p-5"
       style={{
         backgroundColor: "#f0e4d8",

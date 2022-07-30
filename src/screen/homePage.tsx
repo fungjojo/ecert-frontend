@@ -1,4 +1,4 @@
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CertificateTemplate from "../components/CertificateTemplate";
 import Header from "../components/Header";
@@ -6,13 +6,12 @@ import { imageMap } from "../helper/imageHelper";
 import { useLoginHook } from "../hook/loginHook";
 import { logout } from "../redux/actions/loginAction";
 import { getCertificate } from "../redux/actions/certAction";
-import { LoginStateProps } from "../redux/reducers/loginReducer";
 import { useEffect, useState } from "react";
 import TableView from "../components/TableView";
-import { CertStateProps } from "../redux/reducers/certReducer";
 import { certObject } from "../dataModel/dataTypes";
 import Modal from "../components/Modal";
 import Loading from "../components/Loading";
+import html2canvas from "html2canvas";
 
 interface HomeProps {
   logout: Function;
@@ -81,7 +80,17 @@ const Home = (props: HomeProps) => {
     }
   }, [certList]);
 
-  const downloadCert = () => {};
+  const downloadCert = () => {
+    const doc: any = document.querySelector("#capture");
+    if (doc) {
+      html2canvas(doc).then((canvas) => {
+        const element = document.createElement("a");
+        element.href = canvas.toDataURL("image/png");
+        element.download = "cert.png";
+        element.click();
+      });
+    }
+  };
 
   return (
     <>
