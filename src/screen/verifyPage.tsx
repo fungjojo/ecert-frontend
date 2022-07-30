@@ -9,13 +9,15 @@ import dummyCert from "../dummy/test-blockertv2.json";
 import Header from "../components/Header";
 import TableView from "../components/TableView";
 import { imageMap } from "../helper/imageHelper";
+import Loading from "../components/Loading";
 
 interface VerifyProps {
   logout: Function;
+  loading: boolean;
 }
 
 const Verify = (props: VerifyProps) => {
-  const { logout } = props || {};
+  const { logout, loading } = props || {};
   const loginState = useSelector<any, LoginStateProps>((state) => state.login);
   const navigate = useNavigate();
   const isLoggedIn = useLoginHook(loginState.username);
@@ -63,6 +65,7 @@ const Verify = (props: VerifyProps) => {
 
   return (
     <div className="flex flex-col h-full">
+      <Loading isLoading={loading} />
       <Header
         headerTitle="Verify Certificate"
         logout={() => {
@@ -142,6 +145,11 @@ const mapDispatchToProps = (dispatch: Function) => {
   };
 };
 
-const VerifyPage = connect(null, mapDispatchToProps)(Verify);
+const mapStateToProps = (state: any) => {
+  return {
+    loading: state.cert.loading,
+  };
+};
+const VerifyPage = connect(mapStateToProps, mapDispatchToProps)(Verify);
 
 export default VerifyPage;

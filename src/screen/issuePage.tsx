@@ -51,11 +51,11 @@ const Verify = (props: VerifyProps) => {
 
   const downloadSignedCert = async () => {
     const element = document.createElement("a");
-    const blobFile = new Blob([JSON.stringify(signedCert)], {
+    const blobFile = new Blob([JSON.stringify(signedCert?.certDataString)], {
       type: "text/plain",
     });
     element.href = URL.createObjectURL(blobFile);
-    element.download = "myFile.txt";
+    element.download = "signedCertificate.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   };
