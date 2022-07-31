@@ -51,6 +51,7 @@ const Login = (props: LoginProps) => {
 
         <p className="flex my-2 text-xs tx-textGrey">Password</p>
         <input
+          type="password"
           title="password"
           placeholder="Password"
           className="flex flex-1 rounded-md p-3 my-2 w-full"
